@@ -1,5 +1,0 @@
-# Run against localhost
-ansible -i ./hosts --connection=local local -m ping
-
-# Run against remote server
-ansible -i ./hosts remote -m ping
