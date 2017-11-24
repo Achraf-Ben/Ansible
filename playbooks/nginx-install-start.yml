@@ -17,4 +17,8 @@
    - name: Start Nginx
      service:
        name: nginx
+<<<<<<< HEAD
        state: started
+=======
+       state: started
+>>>>>>> 8596dd3dfc26e5c943c016dff81bc90f7ac92ffd

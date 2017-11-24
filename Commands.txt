@@ -1,0 +1,24 @@
+# Run apt-get install nginx against a local server
+ansible -i ./hosts local --connection=local -b --become-user=root \
+    -m shell -a 'apt-get install nginx'
+
+# Run apt-get install nginx against a remote server
+ansible -i ./hosts remote -b --become-user=root all \
+    -m shell -a 'apt-get install nginx'
+
+# Run ping against localhost
+$ ansible -i ./hosts --connection=local local -m ping
+
+# Run ping against remote server
+$ ansible -i ./hosts remote -m ping
+# Run check against a local server
+ansible -i ./hosts local --connection=local -b --become-user=root \
+    -m apt -a 'name=nginx state=installed update_cache=true'
+
+# Run check against a remote server
+ansible -i ./hosts remote -b --become-user=root \
+    -m apt -a 'name=nginx state=installed update_cache=true'
+
+# Error: sudo: a password is required
+1. Open the sudoers file with sudo visudo
+2. Add the following line(replace username): username ALL=(ALL) NOPASSWD:ALL
