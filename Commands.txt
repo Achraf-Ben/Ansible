@@ -25,7 +25,7 @@ ansible -m shell -a 'getent passwd | grep ansible' all
 ansible -b -K -m user -a 'name=newuser state=absent' all
 
 # Play the basic role with a playbook
-ansible-playbook -K basic.yml
+ansible-playbook -K basic.ymld
 
 
 
