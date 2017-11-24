@@ -1,3 +1,31 @@
+ADHOC Commands:
+
+# Check connections
+ansible -m ping all
+
+# Check hostname on all hosts with shell module
+ansible -m shell -a 'hostname' all
+
+# Whoami on all servers with shell  module 
+ansible -m shell -a whoami all
+
+# Check diskspace
+ansible -m shell -ad 'df -h' all
+
+# Run Whoami with sudo by adding -b (user must have root access without password)
+ansible -m shell -a whoami all -b
+
+# Add a user and ask for sudo password, alternative for become if it isn't possible
+ansible -b -K -m user -a 'name=username' all
+
+# Check users 
+ansible -m shell -a 'getent passwd | grep ansible' all
+
+# Remove user
+ansible -b -K -m user -a 'name=newuser state=absent' all
+
+
+
 # Run apt-get install nginx against a local server
 ansible -i ./hosts local --connection=local -b --become-user=root \
     -m shell -a 'apt-get install nginx'
@@ -9,8 +37,6 @@ ansible -i ./hosts remote -b --become-user=root all \
 # Run ping against localhost
 $ ansible -i ./hosts --connection=local local -m ping
 
-# Run ping against remote server
-$ ansible -i ./hosts remote -m ping
 # Run check against a local server
 ansible -i ./hosts local --connection=local -b --become-user=root \
     -m apt -a 'name=nginx state=installed update_cache=true'
@@ -22,3 +48,4 @@ ansible -i ./hosts remote -b --become-user=root \
 # Error: sudo: a password is required
 1. Open the sudoers file with sudo visudo
 2. Add the following line(replace username): username ALL=(ALL) NOPASSWD:ALL
+
