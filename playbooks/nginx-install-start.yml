@@ -1,0 +1,20 @@
+# Example shows using the local machine still
+# Remove 'connection' and set hosts to 'remote' for a remote connection
+- hosts: remote
+  connection: local
+  become: yes
+  become_user: root
+  tasks:
+   - name: Install Nginx
+     apt:
+       name: nginx
+       state: installed
+       update_cache: true
+     notify:
+      - Start Nginx
+
+  handlers:
+   - name: Start Nginx
+     service:
+       name: nginx
+       state: started
