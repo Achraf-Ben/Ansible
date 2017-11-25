@@ -1,5 +1,8 @@
 [local]
 127.0.0.1
 
-[remote]
+[webserver]
 192.168.221.129
+
+[appserver]
+192.168.221.130
