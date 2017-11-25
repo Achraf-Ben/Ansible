@@ -1,6 +1,6 @@
 ---
 - name: Install WordPress, MySQL, Nginx, and PHP-FPM
-  hosts: all
+  hosts: remote
   remote_user: root
   # remote_user: user
   # become: yes
