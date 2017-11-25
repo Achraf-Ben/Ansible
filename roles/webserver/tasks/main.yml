@@ -9,3 +9,5 @@
 
 - name: "Adding proxy configuration"
   template: src=../files/proxy.conf dest=/etc/apache2/conf-available owner=root group=root mode=0644
+  notify:
+  - enable-proxy-config
