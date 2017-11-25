@@ -12,8 +12,8 @@
   - ssh
 
 - name: "Renaming old authorized_keys"
-  shell: creates=/home/ansible/.ssh/authorized_keys_old mv /home/ansible/.ssh/authorized_keys1 /home/ansible/.ssh/authorized_keys_old
+  shell: creates=/home/ansible/.ssh/authorized_keys_old mv /home/ansible/.ssh/authorized_keys /home/ansible/.ssh/authorized_keys_old
 
 - name: "Adding pubkey to authorized keys"
-  copy: src=../files/ansible.pub dest=/home/ansible/.ssh/authorized_keys1 owner=ansible mode=700
+  copy: src=../files/ansible.pub dest=/home/ansible/.ssh/authorized_keys owner=ansible mode=700
 
