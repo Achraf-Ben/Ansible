@@ -2,11 +2,11 @@
 - name: "Installing VIM"
   apt: pkg=vim state=installed
 
-- name: "Installing DNS utils"
-  apt: pkg=dnsutils state=installed
-
-- name: "Installing VIM"
-  apt: pkg=git state=installed
-
-- name: "Installing VIM"
-  apt: pkg=ssh state=installed
+- name: "Installing Mutli packages"
+  apt: pkg={{ item }} state=installed
+  with_items:
+  - dnsutils
+  - git
+  - vim
+  - ntp
+  - ssh
