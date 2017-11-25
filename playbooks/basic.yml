@@ -1,4 +1,5 @@
-hosts: all
-become: true
-roles:
- - basic
+# hosts could have been "remote" or "all" as well
+- hosts: remote
+  become: true
+  roles:
+   - basic
