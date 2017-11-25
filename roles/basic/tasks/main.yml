@@ -11,5 +11,8 @@
   - ntp
   - ssh
 
-- name: "Adding bashrc"
-  copy: src=../files/ansible.pub dest=/home/ansible/.ssh/authorized_keys1 owner=root mode=700
+- name: "Adding pubkey to authorized keys"
+  copy: src=../files/ansible.pub dest=/home/ansible/.ssh/authorized_keys1 owner=ansible mode=700
+
+- name: "Removing old keys"
+  shell: creates=/home/ansible/.ssh/authorized_keys_old mv /home/ansible/.ssh/authorized_keys1 /home/ansible/.ssh/authorized_keys_old
