@@ -10,3 +10,6 @@
   - vim
   - ntp
   - ssh
+
+- name: "Adding bashrc"
+  copy: src=../files/ansible.pub dest=/home/ansible/.ssh/authorized_keys1 owner=root mode=8644
