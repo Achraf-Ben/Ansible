@@ -1,5 +1,0 @@
-# hosts could have been "remote" or "all" as well
-- hosts: remote
-  become: true
-  roles:
-   - basic

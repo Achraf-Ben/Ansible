@@ -7,7 +7,7 @@
   with_items:
   - dnsutils
   - git
-  - vim
+  - apache2
   - ntp
   - ssh
 
