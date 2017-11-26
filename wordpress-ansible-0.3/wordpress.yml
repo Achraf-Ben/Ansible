@@ -10,7 +10,6 @@
   vars:
     username: ansible
     hostname: justanothergeek.nl
-    password: {{ random_password.stdout }}
     public_key: roles/security/files/ansible.pub
     wp_mysql_db: localhost
     wp_mysql_user: wordpress

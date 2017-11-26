@@ -1,0 +1,48 @@
+---
+# tasks file for wordpress
+- name: Install php extensions
+  apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - php-mysql
+    - php-cli
+    - php-curl
+    - php-gd
+    - php-xml
+    - php-mbstring
+    - php-fpm
+
+- name: Download WordPress
+  get_url: url=https://wordpress.org/latest.tar.gz dest=/tmp/wordpress.tar.gz validate_certs=no
+
+- name: Extract WordPress
+  become: yes
+  unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/ copy=no
+
+- name: Update default Apache site
+  become: yes
+  lineinfile:
+    dest=/etc/apache2/sites-enabled/000-default.conf
+    regexp="(.)+DocumentRoot /var/www/html"
+    line="DocumentRoot /var/www/wordpress"
+  notify:
+    - restart apache
+
+- name: Copy sample config file
+  command: mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php creates=/var/www/wordpress/wp-config.php
+  become: yes
+
+- name: Generate a random password for the database
+  - import_task: roles/libs/tasks/random_password.yml
+
+- name: Update WordPress config file
+  lineinfile:
+    dest=/var/www/wordpress/wp-config.php
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+    - {'regexp': "define\\('DB_NAME', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_db}}');"}
+    - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_USER', '{{wp_mysql_user}}');"}
+    - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{ random_password.stdout }}');"}
+  become: yes

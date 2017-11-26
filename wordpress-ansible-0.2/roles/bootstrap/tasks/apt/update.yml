@@ -1,0 +1,4 @@
+---
+# Execute apt-get update
+- name: Executing apt-get update command, Hold on...
+  apt: update_cache=yes

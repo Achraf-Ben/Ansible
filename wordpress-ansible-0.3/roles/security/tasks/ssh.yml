@@ -21,10 +21,11 @@
     dest: /etc/sudoers
     state: present
     regexp: "^%ansible"
-    line: "%ansible ALL=(ALL) NOPASSWD:ALL"
+    line: "%{{ username }} ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
-- import_task: roles/libs/tasks/random_password.yml
+- name: Generate a random password for the database
+  - import_task: roles/libs/tasks/random_password.yml
 
 - name: Create default user
   become: yes
@@ -32,7 +33,7 @@
   user:
     name: "{{ username }}"
     groups: sudo
-    password: "{{ password }}"
+    password: "{{ random_password.stdout }}"
     shell: /bin/bash
     update_password: always
     state: present

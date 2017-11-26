@@ -1,0 +1,4 @@
+---
+- import_tasks: roles/security/tasks/ssh.yml
+- import_tasks: roles/security/tasks/fail2ban.yml
+- import_tasks: roles/security/tasks/uwfirewall.yml
