@@ -24,7 +24,7 @@
     line: "%{{ username }} ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
-- import_task: roles/libs/tasks/random_password.yml
+- import_task: roles/security/tasks/random_password.yml
 
 - name: Create default user
   become: yes
