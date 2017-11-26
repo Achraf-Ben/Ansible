@@ -45,10 +45,10 @@
     user: "{{ username }}"
     key: "{{ lookup('file', public_key) }}"
 
-- name: Ensure authorized_keys permissions are 0644
-  file:
-    path: \home\ansible\.ssh\authorized_keys
-    mode: 0644
+#- name: Ensure authorized_keys permissions are 0644
+#  file:
+#    path: \home\ansible\.ssh\authorized_keys
+#    mode: 0644
 
 - name: Disable root login
   become: yes
