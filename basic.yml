@@ -8,3 +8,8 @@
   become: true
   roles:
   - webserver
+
+- hosts: wordpress
+  become: true
+  roles:
+  - wordpress
