@@ -20,8 +20,7 @@
   command: mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php creates=/var/www/wordpress/wp-config.php
   become: yes
 
-- name: Generate a random password for the database
-  - import_task: roles/libs/tasks/random_password.yml
+- import_task: roles/libs/tasks/random_password.yml
 
 - name: Update WordPress config file
   lineinfile:
