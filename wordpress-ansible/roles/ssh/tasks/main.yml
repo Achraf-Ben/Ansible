@@ -39,7 +39,12 @@
   authorized_key:
     user: "{{ username }}"
     key: "{{ lookup('file', public_key) }}"
-    mode: '0644'
+
+- name: Ensure authorized_keys permissions are 0644
+  file:
+    path: \home\ansible\.ssh\authorized_keys
+    mode: 0644
+    recurse: yes
 
 - name: Disable root login
   become: yes
@@ -60,3 +65,9 @@
     line: "PasswordAuthentication no"
     state: present
   notify: restart ssh
+
+- name: Ensure files sshd permissions are 0600
+  file:
+    path: /etc/ssh/sshd_config
+    mode: 0600
+    recurse: yes

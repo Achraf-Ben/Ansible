@@ -17,3 +17,5 @@
     - libapache2-mod-php
     - php-mcrypt
     - python-mysqldb
+
+- name: Change hostname
