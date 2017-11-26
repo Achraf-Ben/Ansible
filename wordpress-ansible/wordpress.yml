@@ -8,3 +8,6 @@
   roles:
     - appserver
     - ssh
+    - php
+    - mysql
+    - wordpress
