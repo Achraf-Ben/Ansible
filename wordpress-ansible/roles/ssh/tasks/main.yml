@@ -66,6 +66,8 @@
   notify: restart ssh
 
 - name: Ensure files sshd permissions are 0600
+  become: yes
+  become_method: sudo
   file:
     path: /etc/ssh/sshd_config
     mode: 0600
