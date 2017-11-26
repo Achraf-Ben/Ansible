@@ -1,10 +1,10 @@
 ---
 - import_tasks: ping.yml
-- include: python3json.yml
-- include: apt/update.yml
-- include: apt/dist_upgrade.yml
-- include: apt/install.yml
-- include: hostname.yml
-- include: timezone.yml
-- include: umask.yml
-- include: apt/ntp.yml
+- import_tasks: python3json.yml
+- import_tasks: apt/update.yml
+- import_tasks: apt/dist_upgrade.yml
+- import_tasks: apt/install.yml
+- import_tasks: hostname.yml
+- import_tasks: timezone.yml
+- import_tasks: umask.yml
+- import_tasks: apt/ntp.yml
