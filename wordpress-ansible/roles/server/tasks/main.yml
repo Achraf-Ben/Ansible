@@ -17,3 +17,30 @@
     - libapache2-mod-php
     - php-mcrypt
     - python-mysqldb
+
+- name: Set authorized key for root, removing all the authorized key already set
+  authorized_key:
+    user: root
+    key: '{{ item }}'
+    state: present
+    exclusive: True
+  with_file:
+    - files/ansible.pub
+
+- name: Set authorized key for ansible, removing all the authorized key already set
+  authorized_key:
+    user: ansible
+    key: '{{ item }}'
+    state: present
+    exclusive: True
+  with_file:
+    - files/ansible.pub
+
+- name: Set authorized key for pi, removing all the authorized key already set
+  authorized_key:
+    user: pi
+    key: '{{ item }}'
+    state: present
+    exclusive: True
+  with_file:
+    - files/ansible.pub
