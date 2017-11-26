@@ -1,18 +1,5 @@
 ---
 # tasks file for wordpress
-- name: Install php extensions
-  apt: name={{ item }} state=present
-  become: yes
-  become_method: sudo
-  with_items:
-    - php-mysql
-    - php-cli
-    - php-curl
-    - php-gd
-    - php-xml
-    - php-mbstring
-    - php-fpm
-
 - name: Download WordPress
   get_url: url=https://wordpress.org/latest.tar.gz dest=/tmp/wordpress.tar.gz validate_certs=no
 

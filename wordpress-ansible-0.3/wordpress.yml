@@ -9,7 +9,8 @@
 
   vars:
     username: ansible
-    hostname: justanothergeek.nl
+    hostname: anothergeek.nl
+    website_name: anothergeek.nl
     public_key: roles/security/files/ansible.pub
     wp_mysql_db: localhost
     wp_mysql_user: wordpress
@@ -18,7 +19,6 @@
     - bootstrap
     - security
     - appserver
-    - php
     - wordpress
     - print
     - reboot
