@@ -1,6 +1,7 @@
 ---
 # tasks file for mysql
 - name: Set root Password
+  sudo: yes
   mysql_user: name=root host={{ item }} password={{ mysql_root_password }} state=present
   with_items:
     - localhost
@@ -8,27 +9,32 @@
     - ::1
 
 - name: Reload privilege tables
+  sudo: yes
   command: 'mysql -ne "{{ item }}"'
   with_items:
     - FLUSH PRIVILEGES
   changed_when: False
 
-- name: Add .my.cnf
-  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
+#- name: Add .my.cnf
+# sudo: yes
+#  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
 
 - name: Remove anonymous users
+  sudo: yes
   command: 'mysql -ne "{{ item }}"'
   with_items:
     - DELETE FROM mysql.user WHERE User=''
   changed_when: False
 
 - name: Disallow root login remotely
+  sudo: yes
   command: 'mysql -ne "{{ item }}"'
   with_items:
     - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
   changed_when: False
 
 - name: Remove test database and access to it
+  sudo: yes
   command: 'mysql -ne "{{ item }}"'
   with_items:
     - DROP DATABASE test
@@ -37,15 +43,18 @@
   ignore_errors: True
 
 - name: Reload privilege tables
+  sudo: yes
   command: 'mysql -ne "{{ item }}"'
   with_items:
     - FLUSH PRIVILEGES
   changed_when: False
 
 - name: Create mysql database
+  sudo: yes
   mysql_db: name={{ wp_mysql_db }} state=present
 
 - name: Create mysql user
+  sudo: yes
   mysql_user:
     name={{ wp_mysql_user }}
     password={{ wp_mysql_password }}
