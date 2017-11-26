@@ -1,0 +1,48 @@
+---
+# Setup WordPress PlayBook
+
+- include: roles/website/tasks/mysql.yml
+
+- name: Checking WP-CLI, Hold on...
+  stat:
+    path: /usr/local/bin/wp
+  register: setup_wp_cli
+
+- name: Installing WP-CLI, Hold on...
+  get_url:
+    url:  https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: /usr/local/bin/wp
+    mode: 777
+  when: setup_wp_cli.stat.islnk is not defined
+
+- name: Downloading Latest WordPress, Hold on...
+  shell: cd /home/{{ username | lower }}/vhosts/{{ website_name | lower }}/htdocs/ && wp --allow-root core download
+
+- name: Fetching random salts for WordPress config, Hold on...
+  uri:
+    url: https://api.wordpress.org/secret-key/1.1/salt/
+    method: GET
+    return_content: yes
+  register: wp_salt
+
+- name: Copy wp-config.php File, Hold on...
+  template: src=wordpress/wp-config.php dest=/home/{{ username | lower }}/vhosts/{{ website_name | lower }}/wp-config.php
+
+# Gererate Random Password For WordPress User
+- include: roles/libs/tasks/random_password.yml
+
+- name: Setup WordPress Tables, Hold on...
+  shell: cd /home/{{ username | lower }}/vhosts/{{ website_name | lower }}/htdocs/ && wpcli core install --allow-root  --url={{ website_name | lower }} --title="{{ website_name | lower }}" --admin_name="{{ username | lower }}" --admin_password={{ random_password.stdout }} --admin_email="{{ username | lower }}@localhost.localdomain"
+
+- name: Setup WordPress Permalink, Hold on...
+  shell: cd /home/{{ username | lower }}/vhosts/{{ website_name | lower }}/htdocs/ && wpcli rewrite structure --allow-root /%year%/%monthnum%/%day%/%postname%/
+
+- name: Downloading NGINX Cache Purge Script, Hold on...
+  get_url:
+    url:  https://raw.githubusercontent.com/AnsiPress/AnsiTools/master/cache/purge.php
+    dest: /home/{{ username | lower }}/vhosts/{{ website_name | lower }}/htdocs/
+    mode: 644
+  when: website_type == "wpfc"
+
+- name: Fixing WordPress Permissions, Hold On
+  shell: find /home/{{ username | lower }}/vhosts/{{ website_name | lower }} -type d -exec chmod 750 {} \; && find /home/{{ username | lower }}/vhosts/{{ website_name | lower }} -type f -exec chmod 640 {} \; && chown -R {{ username | lower }}:{{ username | lower }} /home/{{ username | lower }}/vhosts/{{ website_name | lower }}
