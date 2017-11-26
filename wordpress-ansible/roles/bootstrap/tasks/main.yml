@@ -1,5 +1,5 @@
 ---
-- include: ping.yml
+- import_tasks: ping.yml
 - include: python3json.yml
 - include: apt/update.yml
 - include: apt/dist_upgrade.yml
