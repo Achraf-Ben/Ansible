@@ -1,0 +1,19 @@
+---
+# tasks file for server
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  become: yes
+  become_method: sudo
+
+- name: Install required software
+  apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - apache2
+    - mysql-server
+    - php-mysql
+    - php
+    - libapache2-mod-php
+    - php-mcrypt
+    - python-mysqldb
