@@ -12,6 +12,14 @@
     line: "%sudo ALL=(ALL:ALL) ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
+- name: Ensure passwordless sudo for user ansible
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%ansible"
+    line: "%ansible ALL=(ALL) NOPASSWD:ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
 - name: Create default user
   user:
     name: "{{ username }}"
