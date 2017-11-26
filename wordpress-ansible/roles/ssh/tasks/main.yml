@@ -5,6 +5,8 @@
     state: present
 
 - name: Ensure sudo group has sudo privileges
+  become: yes
+  become_method: sudo
   lineinfile:
     dest: /etc/sudoers
     state: present
@@ -13,6 +15,8 @@
     validate: "/usr/sbin/visudo -cf %s"
 
 - name: Ensure passwordless sudo for user ansible
+  become: yes
+  become_method: sudo
   lineinfile:
     dest: /etc/sudoers
     state: present
@@ -21,6 +25,8 @@
     validate: "/usr/sbin/visudo -cf %s"
 
 - name: Create default user
+  become: yes
+  become_method: sudo
   user:
     name: "{{ username }}"
     groups: sudo
