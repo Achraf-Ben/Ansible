@@ -44,7 +44,6 @@
   file:
     path: \home\ansible\.ssh\authorized_keys
     mode: 0644
-    recurse: yes
 
 - name: Disable root login
   become: yes
@@ -70,4 +69,3 @@
   file:
     path: /etc/ssh/sshd_config
     mode: 0600
-    recurse: yes
