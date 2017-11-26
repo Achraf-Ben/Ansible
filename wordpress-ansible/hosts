@@ -2,10 +2,11 @@
 192.168.1.76
 
 [webserver]
-192.168.221.131
+192.168.221.131 ansible_ssh_user=ansible
 
 [appserver]
-192.168.221.132
+192.168.221.132 ansible_ssh_pass=Ansible123 ansible_ssh_user=ansible
 
 [dbserver]
-192.168.221.133
+192.168.221.133 ansible_ssh_user=ansible
+
