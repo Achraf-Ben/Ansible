@@ -1,8 +1,0 @@
----
-# Install python3-simplejson
-- name: Install python3-simplejson
-  apt: name={{ item }} state=present
-  become: yes
-  become_method: sudo
-  with_items:
-    - python3-simplejson
