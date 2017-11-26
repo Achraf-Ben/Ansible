@@ -1,6 +1,8 @@
 ---
-# We had include service restart module
-# Also we have to passs service_name variable which trigger
-# service {{ service_name }} restart
-- name: service fail2ban restart
+- name: Security Task - Restart fail2ban service
   service: name=fail2ban state=restarted
+
+- name: Security Task - Restart ssh service
+  become: yes
+  become_method: sudo
+  service: name=ssh state=restarted

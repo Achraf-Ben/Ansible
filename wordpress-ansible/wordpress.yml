@@ -14,13 +14,13 @@
     public_key: roles/ssh/files/ansible.pub
 
   roles:
-    - appserver
-    - ssh
-    - php
-    - wordpress
-    - firewall
     - bootstrap
     - security
+    - appserver
+    - php
+    - wordpress
+
+
 #    - reboot
 #    - stack
 #    - user
