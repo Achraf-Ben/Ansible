@@ -1,9 +1,15 @@
 ---
 # Print Userful Information
 
-- name: Getting WordPress Setup Information, Hold on...
+- name: Getting Database Information, Hold on...
   debug:
     msg: "{{ item }}"
   with_items:
-    - WordPress Username = {{ username | lower }}
-    - WordPress Password = {{ random_password.stdout }}
+    - Machine username = {{ username | lower}}
+    - Machine password = {{ userpass}}
+    - Hostname = {{ hostname}}
+    - Website name = {{ website_name}}
+    - Publickey = {{ public_key}}
+    - SQLDB server = {{ wp_mysql_db}}
+    - SQLDB user = {{ wp_mysql_user}}
+    - SQLDB password = {{ random_password.stdout }}

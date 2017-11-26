@@ -9,6 +9,7 @@
 
   vars:
     username: ansible
+    userpass:
     hostname: anothergeek.nl
     website_name: anothergeek.nl
     public_key: roles/security/files/ansible.pub
@@ -20,8 +21,8 @@
     - security
     - appserver
     - wordpress
-    - print
     - reboot
+    - print
 #    - stack
 #    - user
 #    - website
