@@ -33,6 +33,9 @@
   command: mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php creates=/var/www/wordpress/wp-config.php
   become: yes
 
+- name: Generate a random password for the database
+  - import_task: roles/libs/tasks/random_password.yml
+
 - name: Update WordPress config file
   lineinfile:
     dest=/var/www/wordpress/wp-config.php
@@ -41,5 +44,5 @@
   with_items:
     - {'regexp': "define\\('DB_NAME', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_db}}');"}
     - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_USER', '{{wp_mysql_user}}');"}
-    - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{wp_mysql_password}}');"}
+    - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{ random_password.stdout }}');"}
   become: yes
