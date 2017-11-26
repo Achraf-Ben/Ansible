@@ -1,6 +1,8 @@
 ---
 - name: Installing Fail2ban, Hold on...
   apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
   with_items:
     - fail2ban
   register: package_install
