@@ -56,4 +56,7 @@
 - name: Installing passlib software, Hold on...
   pip: name=passlib state=present
 
+- name: Installing MySQL-python software, Hold on...
+  pip: name=MySQL-python state=present
+
 
