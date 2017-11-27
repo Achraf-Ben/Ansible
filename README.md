@@ -4,8 +4,8 @@ Ansible Playbooks and Templates
 # wordpress-ansible-0.3
 
 The variables you can change in the wordpress.yml playbook:
-
-   - vars:
+```
+    vars:
     username: username
     userpass: user password
     hostname: hostname.com
@@ -13,9 +13,9 @@ The variables you can change in the wordpress.yml playbook:
     public_key: path/to/public/key.pub
     wp_mysql_db: database server (localhost or a remote server)
     wp_mysql_user: database username
-
+```
 All roles and tasks you can find in the wordpress-ansible-0.3 playbook:
-
+```
     - bootstrap
         -roles/bootstrap/tasks
         Executing ping command, Hold on...
@@ -101,3 +101,4 @@ All roles and tasks you can find in the wordpress-ansible-0.3 playbook:
     To do:
     - mysql
     - letsencrypt
+```
