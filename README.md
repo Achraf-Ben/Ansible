@@ -1,7 +1,7 @@
 # Ansible
 Ansible Playbooks and Templates
 
-# wordpress-ansible-0.3
+# wordpress-ansible
 
 The variables you can change in the wordpress.yml playbook:
 ```
@@ -14,7 +14,7 @@ The variables you can change in the wordpress.yml playbook:
     wp_mysql_db: database server (localhost or a remote server)
     wp_mysql_user: database username
 ```
-All roles and tasks you can find in the wordpress-ansible-0.3 playbook:
+All roles and tasks you can find in the wordpress-ansible playbook:
 ```
     - bootstrap
         -roles/bootstrap/tasks
