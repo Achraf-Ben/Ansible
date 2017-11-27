@@ -35,7 +35,7 @@
   user:
     name: "{{ username }}"
     groups: sudo
-    password: {{ userpass }}
+    password: "{{ userpass }}"
     shell: /bin/bash
     update_password: always
     state: present
