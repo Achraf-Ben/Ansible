@@ -52,6 +52,7 @@
     - apt-transport-https
     - python-software-properties
     - software-properties-common
+    - libmysqlclient-dev
 
 - name: Installing PIP software, Hold on...
   pip: name=pip state=latest
