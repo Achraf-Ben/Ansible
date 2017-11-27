@@ -2,6 +2,3 @@
 # Make sure Ansible is connect to the server
 - name: Executing ping command, Hold on...
   ping:
-
-- name: Executing ping 4.2.2.2 command, Hold on...
-  ping: 4.2.2.2
