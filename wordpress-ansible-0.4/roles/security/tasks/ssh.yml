@@ -24,11 +24,6 @@
     line: "%{{ username }} ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
-# Generate Random Password
-- name: Generating Random Password for {{ username }}, Hold on...
-  shell: cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n1
-  register: userpass
-
 - name: Create default user
   become: yes
   become_method: sudo

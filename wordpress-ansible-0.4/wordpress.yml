@@ -9,7 +9,7 @@
 
   vars:
     username: ansible
-    #userpass: examplepassword
+    userpass: Ansible123
     hostname: anothergeek.nl
     website_name: anothergeek
     public_key: roles/security/files/ansible.pub
