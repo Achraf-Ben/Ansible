@@ -3,7 +3,17 @@ Ansible Playbooks and Templates
 
 # wordpress-ansible-0.3
 
-Roles
+The variables you can change in the wordpress.yml playbook:
+    vars:
+    username: username
+    userpass: user password
+    hostname: hostname.com
+    website_name: hostname.com
+    public_key: path/to/public/key.pub
+    wp_mysql_db: database server (localhost or a remote server)
+    wp_mysql_user: database username
+
+All roles and tasks you can find in the wordpress-ansible-0.3 playbook:
 
     - bootstrap
         -roles/bootstrap/tasks
