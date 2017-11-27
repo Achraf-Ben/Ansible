@@ -6,10 +6,11 @@
     msg: "{{ item }}"
   with_items:
     - Machine username = {{ username | lower}}
-    - Machine password = {{ userpass}}
-    - Hostname = {{ hostname}}
-    - Website name = {{ website_name}}
+    - Machine password = {{ userpass.stdout }}
+    - Hostname = {{ hostname }}
+    - Website name = {{ website_name }}
     - Publickey = {{ public_key}}
-    - SQLDB server = {{ wp_mysql_db}}
-    - SQLDB user = {{ wp_mysql_user}}
-    - SQLDB password = {{ random_password.stdout }}
+    - SQLDB server = {{ website_name }}
+    - SQLDB user = {{ website_name }}
+    - SQLDB user pass = {{ mysqluserpassword.stdout }}
+    - SQLDB password = {{ mysqlrootpassword.stdout }}

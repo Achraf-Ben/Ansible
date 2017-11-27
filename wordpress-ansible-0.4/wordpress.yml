@@ -1,5 +1,5 @@
 ---
-- hosts: appserver
+- hosts: appserver1
   become: yes
   become_method: sudo
   gather_facts: no
@@ -11,7 +11,7 @@
     username: ansible
     #userpass: examplepassword
     hostname: anothergeek.nl
-    website_name: anothergeek.nl
+    website_name: anothergeek
     public_key: roles/security/files/ansible.pub
     #wp_mysql_db: wordpress
     #wp_mysql_user: wordpress
@@ -27,5 +27,3 @@
     - mysql
     - reboot
     - print
-#    - user
-#    - website
