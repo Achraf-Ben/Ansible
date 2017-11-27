@@ -4,10 +4,6 @@
     name: sudo
     state: present
 
-- name: Install pwgen
-  apt: name=pwgen state=present
-  become: yes
-  become_method: sudo
 
 - name: Ensure sudo group has sudo privileges
   become: yes
@@ -29,11 +25,27 @@
     line: "%{{ username }} ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
-- name: generate linux user password
-  become: yes
-  become_method: sudo
-  local_action: shell /usr/bin/pwgen 16 1
-  register: generated_linux_user_password
+# Generate random password for new_user_name and the new_user_name
+# is required to change his/her password on first logon.
+
+- name: Generate password for new user
+  shell: makepasswd --chars=20
+  register: user_password
+
+- name: Generate encrypted password
+  shell: mkpasswd --method=SHA-512 {{ user_password.stdout }}
+  register: encrypted_user_password
+
+- name: Create user account
+  user:
+    name: {{ username }}
+    password: {{ encrypted_user_password.stdout }}
+    state: present
+    append: yes
+    shell: /bin/bash
+    update_password: always
+  when: username is defined and username in uids
+  register: user_created
 
 - name: Create default user
   user:
@@ -42,12 +54,6 @@
     shell: /bin/bash
     state: present
     groups: sudo
-
-- name: generate linux root password
-  become: yes
-  become_method: sudo
-  local_action: shell /usr/bin/pwgen 16 1
-  register: generated_linux_root_password
 
 - name: Create auto generated password for root
   user:
