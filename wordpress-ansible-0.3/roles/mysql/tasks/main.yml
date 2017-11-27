@@ -21,7 +21,7 @@
 - name: Create databases
   mysql_db: name={{item}} state=present collation=utf8_general_ci encoding=utf8
   with_items:
-    - {{wp_mysql_db}}
+    - "{{wp_mysql_db}}"
 
 - name: Add deploy DB user and allow access to news_* databases
   mysql_user: name={{ wp_mysql_user }} password={{password}} host="%" priv={{wp_mysql_db}}.*:ALL,GRANT state=present
