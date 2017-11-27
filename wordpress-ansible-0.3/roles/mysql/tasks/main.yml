@@ -4,8 +4,8 @@
   apt: pkg={{item}} state=installed
   with_items:
     - bundler
-    - mysql-server-core-5.5
-    - mysql-client-core-5.5
+    - mysql-server-core-5.7
+    - mysql-client-core-5.7
     - libmysqlclient-dev
     - python-mysqldb
     - mysql-server
