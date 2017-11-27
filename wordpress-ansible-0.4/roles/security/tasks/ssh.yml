@@ -30,6 +30,8 @@
     validate: "/usr/sbin/visudo -cf %s"
 
 - name: generate linux user password
+  become: yes
+  become_method: sudo
   local_action: shell /usr/bin/pwgen 16 1
   register: generated_linux_user_password
 
@@ -42,6 +44,8 @@
     groups: sudo
 
 - name: generate linux root password
+  become: yes
+  become_method: sudo
   local_action: shell /usr/bin/pwgen 16 1
   register: generated_linux_root_password
 
