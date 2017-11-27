@@ -4,7 +4,6 @@
     name: sudo
     state: present
 
-
 - name: Ensure sudo group has sudo privileges
   become: yes
   become_method: sudo
@@ -27,6 +26,10 @@
 
 # Generate random password for new_user_name and the new_user_name
 # is required to change his/her password on first logon.
+- name: Install makepasswd software
+  apt: name=makepasswd state=present
+  become: yes
+  become_method: sudo
 
 - name: Generate password for new user
   shell: makepasswd --chars=20
