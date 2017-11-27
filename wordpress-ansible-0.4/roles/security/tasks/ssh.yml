@@ -31,15 +31,15 @@
   become: yes
   become_method: sudo
 
-- name: Generate password for new user
+- name: Generate a new password for user
   shell: makepasswd --chars=20
   register: user_password
 
-- name: Generate encrypted password
+- name: Encrypt generated user password
   shell: mkpasswd --method=SHA-512 {{ user_password.stdout }}
   register: encrypted_user_password
 
-- name: Create user account
+- name: Create the user account
   user:
     name: "{{ username }}"
     password: "{{ encrypted_user_password.stdout }}"
@@ -48,10 +48,18 @@
     shell: /bin/bash
     update_password: always
 
-#- name: Create auto generated password for root
-#  user:
-#    name: root
-#    password: "{{ lookup('generated_linux_root_password', 'credentials/' + '/password.txt encrypt=md5_crypt') }}"
+- name: Generate a new password for root
+  shell: makepasswd --chars=20
+  register: root_password
+
+- name: Encrypt generated root password
+  shell: mkpasswd --method=SHA-512 {{ root_password.stdout }}
+  register: encrypted_root_password
+
+- name: Create auto generated password for root
+  user:
+    name: root
+    password: "{{ encrypted_root_password.stdout }}"
 
 - name: Add authorized key
   authorized_key:

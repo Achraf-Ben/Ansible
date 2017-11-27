@@ -37,12 +37,16 @@
 - name: Start the mysql services
   service: name={{ mysql_service }} state=started enabled=yes
 
-- name: Generating Random Password mysqlrootpassword, Hold on...
-  shell: cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n1
-  register: mysqlrootpassword.stdout
+- name: Generate a new password for mysql root
+  shell: makepasswd --chars=20
+  register: mysqlrootpassword
+
+- name: Encrypt generated mysql root password
+  shell: mkpasswd --method=SHA-512 {{ mysqlrootpassword.stdout }}
+  register: encrypted_mysqlrootpassword
 
 - name: update mysql root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ mysqlrootpassword.stdout }}
+  mysql_user: name=root host={{ item }} password={{ encrypted_mysqlrootpassword.stdout }}
   with_items:
    - "{{ ansible_hostname }}"
    - 127.0.0.1
@@ -51,7 +55,7 @@
   when: ansible_hostname != 'localhost'
 
 - name: update mysql root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
+  mysql_user: name=root host={{ item }} password={{ encrypted_mysqlrootpassword.stdout }}
   with_items:
    - 127.0.0.1
    - ::1
@@ -76,19 +80,24 @@
     - "{{ mysql_db }}"
   when: mysql_db|lower() != 'none'
 
-- name: Generating Random Password mysqluserpassword, Hold on...
-  shell: cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n1
-  register: mysqluserpassword.stdout
+
+- name: Generate a new password for mysql user
+  shell: makepasswd --chars=20
+  register: mysqluserpassword
+
+- name: Encrypt generated mysql user password
+  shell: mkpasswd --method=SHA-512 {{ mysqluserpassword.stdout }}
+  register: encrypted_mysqluserpassword
 
 - name: Create the database users
-  mysql_user: name={{ item.name }}  password={{ mysqluserpassword.stdout|default("foobar") }}
+  mysql_user: name={{ item.name }}  password={{ encrypted_mysqluserpassword.stdout|default("foobar") }}
                 priv={{ item.priv|default("*.*:ALL") }} state=present host={{ item.host | default("localhost") }}
   with_items:
     - "{{ mysql_users }}"
   when: mysql_users|lower() != 'none'
 
 - name: Create the replication users
-  mysql_user: name={{ item.name }}  host="%" password={{ mysqluserpassword.stdout|default("foobar") }}
+  mysql_user: name={{ item.name }}  host="%" password={{ encrypted_mysqluserpassword.stdout|default("foobar") }}
                 priv=*.*:"REPLICATION SLAVE" state=present
   with_items:
     - "{{ mysql_repl_user }}"

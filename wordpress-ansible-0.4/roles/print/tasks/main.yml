@@ -5,12 +5,11 @@
   debug:
     msg: "{{ item }}"
   with_items:
-    - Machine username = {{ username | lower}}
-    - Machine password = {{ userpass.stdout }}
+    - User = {{ username | lower}}
+    - User password = {{ encrypted_user_password.stdout }}
+    - Root password = { encrypted_root_password.stdout }}
     - Hostname = {{ hostname }}
     - Website name = {{ website_name }}
     - Publickey = {{ public_key}}
-    - SQLDB server = {{ website_name }}
-    - SQLDB user = {{ website_name }}
     - SQLDB user pass = {{ mysqluserpassword.stdout }}
     - SQLDB password = {{ mysqlrootpassword.stdout }}

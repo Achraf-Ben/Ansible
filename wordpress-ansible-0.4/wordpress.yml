@@ -23,7 +23,7 @@
     - bootstrap
     - security
     - appserver
-    - wordpress
     - mysql
+    - wordpress
     - reboot
     - print
