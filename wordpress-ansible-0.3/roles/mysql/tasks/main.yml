@@ -48,8 +48,8 @@
 #  become_method: sudo
 #  pip: name=MySQL-python state=present
 
-- name: Remove the MySQL test database
-  action: mysql_db db=test state=absent
+#- name: Remove the MySQL test database
+#  action: mysql_db db=test state=absent
 
 - name: Create global my.cnf
   template: src=etc.my.cnf dest=/etc/mysql/my.cnf
