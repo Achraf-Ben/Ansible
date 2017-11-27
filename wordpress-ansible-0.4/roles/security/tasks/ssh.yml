@@ -37,7 +37,6 @@
     groups: sudo
     password: "{{ userpass }}"
     shell: /bin/bash
-    update_password: always
     state: present
 
 - name: Add authorized key
