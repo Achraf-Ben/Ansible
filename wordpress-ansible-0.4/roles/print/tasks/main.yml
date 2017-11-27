@@ -1,0 +1,15 @@
+---
+# Print Userful Information
+
+- name: Getting Database Information, Hold on...
+  debug:
+    msg: "{{ item }}"
+  with_items:
+    - Machine username = {{ username | lower}}
+    - Machine password = {{ userpass}}
+    - Hostname = {{ hostname}}
+    - Website name = {{ website_name}}
+    - Publickey = {{ public_key}}
+    - SQLDB server = {{ wp_mysql_db}}
+    - SQLDB user = {{ wp_mysql_user}}
+    - SQLDB password = {{ random_password.stdout }}

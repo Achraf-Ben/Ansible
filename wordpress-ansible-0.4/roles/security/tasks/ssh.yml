@@ -1,0 +1,78 @@
+---
+- name: Ensure sudo group is present
+  group:
+    name: sudo
+    state: present
+
+- name: Ensure sudo group has sudo privileges
+  become: yes
+  become_method: sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%sudo"
+    line: "%sudo ALL=(ALL:ALL) ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: Ensure passwordless sudo for user {{ username }}
+  become: yes
+  become_method: sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%ansible"
+    line: "%{{ username }} ALL=(ALL) NOPASSWD:ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
+# Generate Random Password
+- name: Generating Random Password for {{ username }}, Hold on...
+  shell: cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n1
+  register: random_password
+
+- name: Create default user
+  become: yes
+  become_method: sudo
+  user:
+    name: "{{ username }}"
+    groups: sudo
+    password: "{{ userpass }}"
+    shell: /bin/bash
+    update_password: always
+    state: present
+
+- name: Add authorized key
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ lookup('file', public_key) }}"
+
+#- name: Ensure authorized_keys permissions are 0644
+#  file:
+#    path: \home\ansible\.ssh\authorized_keys
+#    mode: 0644
+
+- name: Disable root login
+  become: yes
+  become_method: sudo
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+    state: present
+  notify: restart ssh service
+
+- name: Disable password authentication
+  become: yes
+  become_method: sudo
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+  notify: restart ssh service
+
+- name: Ensure sshd_config permissions are 0600
+  become: yes
+  become_method: sudo
+  file:
+    path: /etc/ssh/sshd_config
+    mode: 0600

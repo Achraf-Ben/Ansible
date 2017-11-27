@@ -1,0 +1,57 @@
+---
+# tasks file for appserver
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  become: yes
+  become_method: sudo
+
+- name: Install required software
+  apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - python3-simplejson
+    - apache2
+    - php
+    - libapache2-mod-php
+    - php-mcrypt
+
+- name: Install php extensions
+  apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - php-mysql
+    - php-cli
+    - php-curl
+    - php-gd
+    - php-xml
+    - php-mbstring
+    - php-fpm
+
+- name: Install required software packages
+  apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - bc
+    - tar
+    - sudo
+    - wget
+    - curl
+    - git
+    - htop
+    - coreutils
+    - libssl-dev
+    - lsb-release
+    - ca-certificates
+    - apt-transport-https
+    - python-software-properties
+    - software-properties-common
+    - libmysqlclient-dev
+
+
+
+
+
+

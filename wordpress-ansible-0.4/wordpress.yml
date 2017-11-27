@@ -1,0 +1,31 @@
+---
+- hosts: appserver
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  pre_tasks:
+  - name: Gathering Facts
+    setup:
+
+  vars:
+    username: ansible
+    userpass: examplepassword
+    hostname: anothergeek.nl
+    website_name: anothergeek.nl
+    public_key: roles/security/files/ansible.pub
+    wp_mysql_db: wordpress
+    wp_mysql_user: wordpress
+    wp_mysql_password: TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8
+    mysql_root_password: TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8
+
+
+  roles:
+    - bootstrap
+    - security
+    - appserver
+    - wordpress
+    - mysql
+    - reboot
+    - print
+#    - user
+#    - website
