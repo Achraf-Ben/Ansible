@@ -24,16 +24,16 @@
     line: "%{{ username }} ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
-- name: Create default user
-  become: yes
-  become_method: sudo
+- name: Create default user with auto generated password for root and the user
   user:
-    name: "{{ username }}"
-    groups: sudo
-    password: "{{ userpass }}"
+    name: "{{ item.name }}"
+    password: "{{ lookup('password', 'credentials/' + item.name + '/password.txt encrypt=md5_crypt') }}"
     shell: /bin/bash
-    update_password: always
     state: present
+    groups: sudo
+  with_items:
+    - root
+    - "{{ username }}"
 
 - name: Add authorized key
   authorized_key:
