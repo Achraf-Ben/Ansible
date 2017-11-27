@@ -12,11 +12,9 @@
   with_items:
     - python3-simplejson
     - apache2
-    - mysql-server
     - php
     - libapache2-mod-php
     - php-mcrypt
-    - python-mysqldb
 
 - name: Install php extensions
   apt: name={{ item }} state=present
@@ -46,28 +44,13 @@
     - coreutils
     - libssl-dev
     - lsb-release
-    - python3-dev
-    - python3-pip
     - ca-certificates
     - apt-transport-https
     - python-software-properties
     - software-properties-common
     - libmysqlclient-dev
 
-- name: Installing PIP software, Hold on...
-  become: yes
-  become_method: sudo
-  pip: name=pip state=latest
 
-- name: Installing passlib software, Hold on...
-  become: yes
-  become_method: sudo
-  pip: name=passlib state=present
-
-#- name: Installing MySQL-python software, Hold on...
-#  become: yes
-#  become_method: sudo
-#  pip: name=MySQL-python state=present
 
 
 
