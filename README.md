@@ -4,7 +4,8 @@ Ansible Playbooks and Templates
 # wordpress-ansible-0.3
 
 The variables you can change in the wordpress.yml playbook:
-    vars:
+
+   - vars:
     username: username
     userpass: user password
     hostname: hostname.com
