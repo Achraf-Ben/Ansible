@@ -19,26 +19,26 @@
   template: src=etc.my.cnf dest=/etc/mysql/my.cnf
 
 - name: Create databases
-    mysql_db: name={{item}} state=present collation=utf8_general_ci encoding=utf8
-    with_items:
-      - {{wp_mysql_db}}
+  mysql_db: name={{item}} state=present collation=utf8_general_ci encoding=utf8
+  with_items:
+    - {{wp_mysql_db}}
 
 - name: Add deploy DB user and allow access to news_* databases
-    mysql_user: name={{ wp_mysql_user }} password={{password}} host="%" priv={{wp_mysql_db}}.*:ALL,GRANT state=present
+  mysql_user: name={{ wp_mysql_user }} password={{password}} host="%" priv={{wp_mysql_db}}.*:ALL,GRANT state=present
 
 - name: Set root password
-    mysql_user: name=root password={{password}} host="{{item}}" priv=*.*:ALL,GRANT state=present
-    with_items:
-      - "{{ansible_hostname}}"
-      - 127.0.0.1
-      - ::1
-      - localhost
+  mysql_user: name=root password={{password}} host="{{item}}" priv=*.*:ALL,GRANT state=present
+  with_items:
+    - "{{ansible_hostname}}"
+    - 127.0.0.1
+    - ::1
+    - localhost
 
 - name: Create local my.cnf for root user
-    template: src=my.cnf dest=/root/.my.cnf owner=root mode=0600
+  template: src=my.cnf dest=/root/.my.cnf owner=root mode=0600
 
 - name: Restart the MySQL service
-    action: service name=mysql state=restarted enabled=true
+  action: service name=mysql state=restarted enabled=true
 
 - name: Set root Password
   become: yes
