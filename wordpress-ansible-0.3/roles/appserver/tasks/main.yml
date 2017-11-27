@@ -53,10 +53,15 @@
     - python-software-properties
     - software-properties-common
 
+- name: Installing PIP software, Hold on...
+  pip: name=pip state=latest
+
 - name: Installing passlib software, Hold on...
   pip: name=passlib state=present
 
 - name: Installing MySQL-python software, Hold on...
   pip: name=MySQL-python state=present
+
+
 
 
