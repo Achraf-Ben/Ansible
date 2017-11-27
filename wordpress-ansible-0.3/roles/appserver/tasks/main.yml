@@ -31,7 +31,7 @@
     - php-mbstring
     - php-fpm
 
-- name: Install php extensions
+- name: Install required software packages
   apt: name={{ item }} state=present
   become: yes
   become_method: sudo
