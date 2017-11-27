@@ -2,6 +2,7 @@
 
 mysql_pkgs:
   - python-selinux
+  - libmysqlclient-dev
   - mysql-server
   - python-mysqldb
 
