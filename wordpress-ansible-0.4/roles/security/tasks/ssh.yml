@@ -26,14 +26,16 @@
 
 - name: Create default user with auto generated password for root and the user
   user:
-    name: "{{ item.name }}"
+    name: "{{ username }}"
     password: "{{ lookup('password', 'credentials/' + item.name + '/password.txt encrypt=md5_crypt') }}"
     shell: /bin/bash
     state: present
     groups: sudo
-  with_items:
-    - root
-    - "{{ username }}"
+
+- name: Create auto generated password for root
+  user:
+    name: root
+    password: "{{ lookup('password', 'credentials/' + item.name + '/password.txt encrypt=md5_crypt') }}"
 
 - name: Add authorized key
   authorized_key:
