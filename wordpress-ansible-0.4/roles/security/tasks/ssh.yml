@@ -47,8 +47,6 @@
     append: yes
     shell: /bin/bash
     update_password: always
-  when: username is defined and username in uids
-  register: user_created
 
 #- name: Create auto generated password for root
 #  user:
