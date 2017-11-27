@@ -27,7 +27,7 @@
 # Generate Random Password
 - name: Generating Random Password for {{ username }}, Hold on...
   shell: cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n1
-  register: userpass.stdout
+  register: userpass
 
 - name: Create default user
   become: yes
@@ -35,7 +35,7 @@
   user:
     name: "{{ username }}"
     groups: sudo
-    password: "{{ userpass.stdout }}"
+    password: {{ userpass }}
     shell: /bin/bash
     update_password: always
     state: present
