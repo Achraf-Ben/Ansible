@@ -3,9 +3,9 @@ Ansible Playbooks and Templates
 
 # wordpress-ansible-0.3
 
-#Roles
+Roles
 
-    ##- bootstrap
+    - bootstrap
         -roles/bootstrap/tasks
         Executing ping command, Hold on...
         Checking Network Connection
@@ -16,7 +16,7 @@ Ansible Playbooks and Templates
         Setup UMASK
         Installing NTP Service
 
-    ##- security
+    - security
         -roles/tasks/ssh
         Ensure sudo group is present
         Ensure sudo group has sudo privileges
@@ -39,7 +39,7 @@ Ansible Playbooks and Templates
         Allow HTTPS (port 443)
         Allow SSH (port 22)
 
-    ##- appserver
+    - appserver
         Update apt cache
         Install required software
             - python3-simplejson
@@ -79,7 +79,7 @@ Ansible Playbooks and Templates
         Installing passlib software, Hold on...
         Installing MySQL-python software, Hold on...
 
-    ##- wordpress
+    - wordpress
         Download WordPress
         Extract WordPress
         Update default Apache site
