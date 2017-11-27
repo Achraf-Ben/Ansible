@@ -21,8 +21,8 @@
     - security
     - appserver
     - wordpress
+    - mysql
     - reboot
     - print
-#    - stack
 #    - user
 #    - website
