@@ -38,8 +38,8 @@
 
 - name: Create user account
   user:
-    name: {{ username }}
-    password: {{ encrypted_user_password.stdout }}
+    name: "{{ username }}"
+    password: "{{ encrypted_user_password.stdout }}"
     state: present
     append: yes
     shell: /bin/bash
