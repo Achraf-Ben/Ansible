@@ -27,7 +27,7 @@
 - name: Create the user account
   user:
     name: "{{ username }}"
-    password: "{{ lookup('password', 'credentials/' + '/rootpassword length=15') }}"
+    password: "{{ lookup('password', 'credentials/' + '/rootpassword length=15') | password_hash('sha512')}}"
     state: present
     append: yes
     shell: /bin/bash
@@ -36,7 +36,7 @@
 - name: Create auto generated password for root
   user:
     name: root
-    password: "{{ lookup('password', 'credentials/' + '/rootpassword length=15') }}"
+    password: "{{ lookup('password', 'credentials/' + '/rootpassword length=15') | password_hash('sha512')}}"
 
 - name: Add authorized key
   authorized_key:
