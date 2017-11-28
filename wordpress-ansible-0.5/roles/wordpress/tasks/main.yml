@@ -6,6 +6,9 @@
 - name: Extract WordPress
   become: yes
   file: path=/var/www state=directory
+
+- name: Extract WordPress
+  become: yes
   unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/ copy=no
 
 - name: Update default Apache site
