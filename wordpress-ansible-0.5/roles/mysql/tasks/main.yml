@@ -17,23 +17,13 @@
   environment: "{{ env }}"
   when: ansible_os_family == 'Debian'
 
-- name: Check if MySQL is already installed.
-  stat: path=/etc/init.d/mysql
-  register: mysql_installed
-
-- name: Update apt cache if MySQL is not yet installed.
-  apt: update_cache=yes
-  when: mysql_installed.stat.exists == false
-
-- name: Ensure MySQL Python libraries are installed.
-  apt: "name=python-mysqldb state=installed"
-  when: ansible_os_family == 'Debian'
-
-- name: Installing MySQL-python software
-  become: yes
-  become_method: sudo
-  pip: name=MySQL-python state=present executable=pip
-  when: ansible_os_family == 'Debian'
+- name: Updating pip and installing MySQL-python
+  easy_install:
+    name: {{with.item}}
+    state: latest
+    with:
+      - pip
+      - MySQL-python
 
 - name: Copy the my.cnf file
   template: src=my.cnf.{{ ansible_os_family }}.j2 dest={{ mysql_conf_dir }}/my.cnf
