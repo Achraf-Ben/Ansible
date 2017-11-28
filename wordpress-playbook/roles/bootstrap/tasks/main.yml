@@ -28,7 +28,7 @@
 #  apt: name=ntp state=present
 #  notify: service ntp restart
 
-# tasks file for appserver
+# tasks file for apps erver
 
 - name: Install apache2 and php software
   apt: name={{ item }} state=present
@@ -38,6 +38,7 @@
     - apache2
     - python
     - python-pip
+    - python-dev
     - php
     - libapache2-mod-php
     - php-mcrypt
@@ -55,5 +56,7 @@
     - php-mbstring
     - php-fpm
 
-
-
+- name: Updating python pip
+  easy_install: name={{ item }} state=latest
+  with_items:
+    - pip

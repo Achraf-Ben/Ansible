@@ -1,6 +1,7 @@
 ---
 - name: Add the OS specific variables
   include_vars: "{{ ansible_os_family }}.yml"
+- name:
 
 - name: Install the mysql packages in Redhat derivatives
   yum: name={{ item }} state=installed
@@ -17,10 +18,9 @@
   environment: "{{ env }}"
   when: ansible_os_family == 'Debian'
 
-- name: Updating pip and installing MySQL-python
-  easy_install: name={{ item }} state=latest
+- name: Installing MySQL-python
+  easy_install: name={{ item }} state=present
   with_items:
-    - pip
     - MySQL-python
 
 - name: Copy the my.cnf file
