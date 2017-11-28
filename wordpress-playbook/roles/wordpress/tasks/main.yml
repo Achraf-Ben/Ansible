@@ -39,6 +39,7 @@
     - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_USER', '{{ website_name }}');"}
     - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{ mysqldbpassword }}');"}
   become: yes
+  ignore_errors: yes
 
 - name: Changing permissions
   file:
