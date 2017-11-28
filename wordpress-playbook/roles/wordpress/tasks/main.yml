@@ -34,3 +34,10 @@
     - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_USER', '{{ website_name }}');"}
     - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{ mysqldbpassword }}');"}
   become: yes
+
+- name:
+  become: yes
+  file: path=/var/www/wordpress/
+  owner: www-data
+  group: www-data
+  recurse: yes
