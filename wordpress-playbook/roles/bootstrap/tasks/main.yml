@@ -7,8 +7,8 @@
   become: yes
   become_method: sudo
 
-#- name: Executing apt-get dist-upgrade command, Hold on...
-#  apt: upgrade=dist
+- name: Executing apt-get dist-upgrade command, Hold on...
+  apt: upgrade=dist
 
 - name: Setup FQDN, Hold on...
   hostname: name={{ hostname }}
@@ -16,19 +16,17 @@
 #- name: Setup Timezone to UTC, Hold on...
 #  timezone: name=Etc/UTC
 
-#- name: Setup UMASK for better security, Hold on...
-#  lineinfile:
-#    dest: "/etc/profile"
-#    regexp: "{{ item.regexp }}"
-#    line: "{{ item.line }}"
-#  with_items:
-#    - { regexp: '^umask', line: 'umask 0027' }
+- name: Setup UMASK for better security, Hold on...
+  lineinfile:
+    dest: "/etc/profile"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^umask', line: 'umask 0027' }
 
-#- name: Installing NTP Service, Hold on...
-#  apt: name=ntp state=present
-#  notify: service ntp restart
-
-# tasks file for apps erver
+- name: Installing NTP Service, Hold on...
+  apt: name=ntp state=present
+  notify: service ntp restart
 
 - name: Instaling apache2, php, libapache2-mod-php and php-mcrypt
   apt: name={{ item }} state=present
