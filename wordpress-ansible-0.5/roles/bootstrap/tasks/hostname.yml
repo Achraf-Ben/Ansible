@@ -1,4 +1,0 @@
----
-# Setup FQDN
-- name: Setup FQDN, Hold on...
-  hostname: name={{ hostname }}

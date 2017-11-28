@@ -1,8 +1,59 @@
 ---
-- import_tasks: ping.yml
-#- import_tasks: apt/update.yml
-#- import_tasks: apt/dist_upgrade.yml
-- import_tasks: hostname.yml
-- import_tasks: timezone.yml
-- import_tasks: umask.yml
-- import_tasks: apt/ntp.yml
+- name: Executing ping command, Hold on...
+  ping:
+
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  become: yes
+  become_method: sudo
+
+#- name: Executing apt-get dist-upgrade command, Hold on...
+#  apt: upgrade=dist
+
+- name: Setup FQDN, Hold on...
+  hostname: name={{ hostname }}
+
+#- name: Setup Timezone to UTC, Hold on...
+#  timezone: name=Etc/UTC
+
+#- name: Setup UMASK for better security, Hold on...
+#  lineinfile:
+#    dest: "/etc/profile"
+#    regexp: "{{ item.regexp }}"
+#    line: "{{ item.line }}"
+#  with_items:
+#    - { regexp: '^umask', line: 'umask 0027' }
+
+#- name: Installing NTP Service, Hold on...
+#  apt: name=ntp state=present
+#  notify: service ntp restart
+
+# tasks file for appserver
+
+- name: Install apache2 and php software
+  apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - apache2
+    - python
+    - python-pip
+    - php
+    - libapache2-mod-php
+    - php-mcrypt
+
+- name: Install php extensions
+  apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - php-mysql
+    - php-cli
+    - php-curl
+    - php-gd
+    - php-xml
+    - php-mbstring
+    - php-fpm
+
+
+

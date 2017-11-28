@@ -23,6 +23,5 @@
     - bootstrap
     - security
     - mysql
-    - appserver
     - wordpress
     - reboot
