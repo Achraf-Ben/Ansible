@@ -18,10 +18,8 @@
   when: ansible_os_family == 'Debian'
 
 - name: Updating pip and installing MySQL-python
-  easy_install:
-    name: {{with.item}}
-    state: latest
-    with:
+  easy_install: name = {{ item }} state = latest
+    with_items:
       - pip
       - MySQL-python
 
