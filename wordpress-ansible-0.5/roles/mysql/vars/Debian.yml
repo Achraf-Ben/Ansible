@@ -3,6 +3,8 @@
 mysql_pkgs:
   - mysql-common
   - mysql-server
+  - python-dev
+  - python-mysqldb
   - python-pip
   - python-mysqldb
   - libmysqlclient-dev
