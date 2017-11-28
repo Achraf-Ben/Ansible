@@ -11,12 +11,12 @@
     username: ansible
     userpass: examplepassword
     hostname: anothergeek.nl
-    website_name: anothergeek.nl
+    website_name: anothergeek
     public_key: roles/security/files/ansible.pub
-    wp_mysql_db: wordpress
-    wp_mysql_user: wordpress
-    wp_mysql_password: TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8
-    mysql_root_password: TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8
+    #wp_mysql_db: wordpress
+    #wp_mysql_user: wordpress
+    #wp_mysql_password: TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8
+    #mysql_root_password: TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8TjEys8P9nUUGVdjL7KbP97KbUUGVdjLMMnTjEys8
 
 
   roles:
