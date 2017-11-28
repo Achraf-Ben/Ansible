@@ -35,7 +35,7 @@
     - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{ mysqldbpassword }}');"}
   become: yes
 
-- name:
+- name: Changing owenership of /var/www/wordpress to www-data
   become: yes
   file: path=/var/www/wordpress/
   owner: www-data
