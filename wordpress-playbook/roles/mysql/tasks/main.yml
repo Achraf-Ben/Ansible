@@ -71,7 +71,7 @@
 
 - name: Create the database's
   mysql_db:
-    name: "{{ website_name }}"
+    name: "{{ website_name }}" host=localhost
     state: present
 
 - name: Create the database users
@@ -80,3 +80,22 @@
     password: "{{ mysqldbpassword }}"
     state: present
     priv: '"{{ website_name }}".*:ALL'
+
+- name: Tunning MySQL Variables, Hold on...
+  lineinfile:
+    dest: /etc/mysql/my.cnf
+    regexp: "{{ item.regexp }}"
+    backrefs: yes
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^skip-external-locking', line: 'skip-external-locking\nskip-name-resolve' }
+    - { regexp: '^connect_timeout', line: 'connect_timeout         = 10' }
+    - { regexp: '^wait_timeout', line: "wait_timeout            = 60\ninteractive_timeout     = 30" }
+  when: package_install.changed == True
+
+- name: Installing MySQLTunner Script, Hold on...
+  get_url:
+    url:  http://mysqltuner.pl/
+    dest: /usr/local/bin/mysqltuner
+    mode: 755
+  when: package_install.changed == True
