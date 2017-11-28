@@ -5,21 +5,15 @@
 - name: Install the mysql packages in Redhat derivatives
   yum: name={{ item }} state=installed
   with_items:
-    - libselinux-python
-    - mysql-server
-    - MySQL-python
+    - "{{ mysql_pkgs }}"
   when: ansible_os_family == 'RedHat'
 
 - name: Install the mysql packages in Debian derivatives
-  apt: name={{ item }} state=latest update_cache=yes
+  apt: name={{ item }} state=installed update_cache=yes
   become: yes
   become_method: sudo
   with_items:
-    - python-selinux
-    - python-pip
-    - libmysqlclient-dev
-    - mysql-server
-    - python-mysqldb
+    - "{{ mysql_pkgs }}"
   environment: "{{ env }}"
   when: ansible_os_family == 'Debian'
 
