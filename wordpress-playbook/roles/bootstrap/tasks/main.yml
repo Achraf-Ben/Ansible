@@ -30,20 +30,26 @@
 
 # tasks file for apps erver
 
-- name: Install apache2 and php software
+- name: Instaling apache2, php, libapache2-mod-php and php-mcrypt
   apt: name={{ item }} state=present
   become: yes
   become_method: sudo
   with_items:
     - apache2
-    - python
-    - python-pip
-    - python-dev
     - php
     - libapache2-mod-php
     - php-mcrypt
 
-- name: Install php extensions
+- name: Installing python, python-pip and python-dev
+  apt: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - python
+    - python-pip
+    - python-dev
+
+- name: Installing more php extensions
   apt: name={{ item }} state=present
   become: yes
   become_method: sudo
