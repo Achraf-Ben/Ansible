@@ -20,7 +20,7 @@
 - name: Installing MySQL-python software
   become: yes
   become_method: sudo
-  pip: name=MySQL-python state=present
+  pip: name=MySQL-python state=present executable=pip
   when: ansible_os_family == 'Debian'
 
 - name: Copy the my.cnf file
