@@ -24,42 +24,19 @@
     line: "%{{ username }} ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
-# Generate random password for new_user_name and the new_user_name
-# is required to change his/her password on first logon.
-- name: Install makepasswd software
-  apt: name=makepasswd state=present
-  become: yes
-  become_method: sudo
-
-- name: Generate a new password for user
-  shell: makepasswd --chars=20
-  register: user_password
-
-- name: Encrypt generated user password
-  shell: mkpasswd --method=SHA-512 {{ user_password.stdout }}
-  register: encrypted_user_password
-
 - name: Create the user account
   user:
     name: "{{ username }}"
-    password: "{{ encrypted_user_password.stdout }}"
+    password: "{{ lookup('password', 'credentials/' + '/rootpassword length=15') }}"
     state: present
     append: yes
     shell: /bin/bash
     update_password: always
 
-- name: Generate a new password for root
-  shell: makepasswd --chars=20
-  register: root_password
-
-- name: Encrypt generated root password
-  shell: mkpasswd --method=SHA-512 {{ root_password.stdout }}
-  register: encrypted_root_password
-
 - name: Create auto generated password for root
   user:
     name: root
-    password: "{{ encrypted_root_password.stdout }}"
+    password: "{{ lookup('password', 'credentials/' + '/rootpassword length=15') }}"
 
 - name: Add authorized key
   authorized_key:
