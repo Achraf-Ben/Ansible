@@ -76,7 +76,8 @@
     state: present
 
 - name: Create the database users
-  mysql_user: name={{ item.name }}  password={{ item.pass|default("foobar") }}
-                priv={{ item.priv|default("*.*:ALL") }} state=present
-  with_items: mysql_users
-  when: "{{ website_name }}"
+  mysql_user:
+    name: "{{ website_name }}"
+    password: "{{ mysqldbpassword }}"
+    priv: "{{ website_name }}".*:ALL,GRANT
+    state: present
