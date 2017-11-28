@@ -17,6 +17,18 @@
   environment: "{{ env }}"
   when: ansible_os_family == 'Debian'
 
+- name: Check if MySQL is already installed.
+  stat: path=/etc/init.d/mysql
+  register: mysql_installed
+
+- name: Update apt cache if MySQL is not yet installed.
+  apt: update_cache=yes
+  when: mysql_installed.stat.exists == false
+
+- name: Ensure MySQL Python libraries are installed.
+  apt: "name=python-mysqldb state=installed"
+  when: ansible_os_family == 'Debian'
+
 - name: Installing MySQL-python software
   become: yes
   become_method: sudo
