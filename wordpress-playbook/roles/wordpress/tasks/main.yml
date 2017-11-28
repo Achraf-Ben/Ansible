@@ -44,7 +44,7 @@
 - name: Changing permissions
   file:
     path: /var/www/
-    state: present
+    state: directory
     owner: www-data
     group: www-data
     mode: 0775
