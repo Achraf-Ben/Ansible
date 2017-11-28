@@ -1,0 +1,7 @@
+remote_user: root
+ansible_python_interpreter: /usr/bin/python3
+
+# Fail2ban Bantime 24 hours.
+bantime: 86400
+# Fail2ban ignore ip address separated by space
+ignoreip: 127.0.0.1/8
