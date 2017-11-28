@@ -10,12 +10,16 @@
 
 - name: Install the mysql packages in Debian derivatives
   apt: name={{ item }} state=installed update_cache=yes
+  become: yes
+  become_method: sudo
   with_items:
     - "{{ mysql_pkgs }}"
   environment: "{{ env }}"
   when: ansible_os_family == 'Debian'
 
 - name: Installing MySQL-python software
+  become: yes
+  become_method: sudo
   pip: name=MySQL-python state=present
   when: ansible_os_family == 'Debian'
 
