@@ -71,12 +71,13 @@
   mysql_db: name=test state=absent
 
 - name: Create the database's
-  mysql_db: name={{ item.name }} state=present
-  with_items: mysql_db
-  when: mysql_db|lower() != 'none'
+  mysql_db:
+    name: "{{item.name}}"
+    state: present
+  with_items: "{{ website_name }}"
 
 - name: Create the database users
   mysql_user: name={{ item.name }}  password={{ item.pass|default("foobar") }}
                 priv={{ item.priv|default("*.*:ALL") }} state=present
   with_items: mysql_users
-  when: mysql_users|lower() != 'none'
+  when: "{{ website_name }}"
