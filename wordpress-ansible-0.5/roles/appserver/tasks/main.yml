@@ -5,7 +5,7 @@
   become: yes
   become_method: sudo
 
-- name: Install required software
+- name: Install apache2 and php software
   apt: name={{ item }} state=present
   become: yes
   become_method: sudo
