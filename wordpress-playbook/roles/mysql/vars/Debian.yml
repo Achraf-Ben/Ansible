@@ -12,4 +12,4 @@ mysql_pkgs:
 mysql_service: mysql
 mysql_conf_dir: "/etc/mysql/"
 
-ansible_python_interpreter: /usr/local/bin/python
+#ansible_python_interpreter: /usr/local/bin/python
