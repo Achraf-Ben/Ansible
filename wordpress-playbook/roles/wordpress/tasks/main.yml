@@ -3,9 +3,14 @@
 - name: Download WordPress
   get_url: url=https://wordpress.org/latest.tar.gz dest=/tmp/wordpress.tar.gz validate_certs=yes
 
-- name: Create var www
-  become: yes
-  file: path=/var/www state=directory
+- name: Creates /var/www/ directory
+  file:
+    path: /var/www/
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0775
+    recurse: yes
 
 - name: Extract WordPress
   become: yes
@@ -35,9 +40,11 @@
     - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{ mysqldbpassword }}');"}
   become: yes
 
-- name: Changing owenership of /var/www/wordpress to www-data
-  become: yes
-  file: path=/var/www/wordpress/ state=directory
-  owner: www-data
-  group: www-data
-  recurse: yes
+- name: Changing permissions
+  file:
+    path: /var/www/
+    state: present
+    owner: www-data
+    group: www-data
+    mode: 0775
+    recurse: yes
