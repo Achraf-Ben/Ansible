@@ -79,5 +79,5 @@
   mysql_user:
     name: "{{ website_name }}"
     password: "{{ mysqldbpassword }}"
-    priv: *:ALL,GRANT
     state: present
+    priv: '"{{ website_name }}".*:ALL'
