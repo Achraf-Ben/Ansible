@@ -12,7 +12,7 @@ mysql_db:
 
 mysql_users:
      - name: "{{ website_name }}"
-       pass: "{{ lookup('password', 'credentials/' + '/mysqluserpassword length=25')}}"
+       pass: "{{ mysqldbpassword }}"
        priv: "*.*:ALL"
 
 #mysql_repl_user:
