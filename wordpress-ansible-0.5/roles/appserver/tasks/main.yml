@@ -10,7 +10,6 @@
   become: yes
   become_method: sudo
   with_items:
-    - python3-simplejson
     - apache2
     - php
     - libapache2-mod-php
@@ -28,30 +27,6 @@
     - php-xml
     - php-mbstring
     - php-fpm
-
-- name: Install required software packages
-  apt: name={{ item }} state=present
-  become: yes
-  become_method: sudo
-  with_items:
-    - bc
-    - tar
-    - sudo
-    - wget
-    - curl
-    - git
-    - htop
-    - coreutils
-    - libssl-dev
-    - lsb-release
-    - ca-certificates
-    - apt-transport-https
-    - python-software-properties
-    - software-properties-common
-    - libmysqlclient-dev
-
-
-
 
 
 
