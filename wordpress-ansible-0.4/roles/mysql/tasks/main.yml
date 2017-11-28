@@ -37,16 +37,8 @@
 - name: Start the mysql services
   service: name={{ mysql_service }} state=started enabled=yes
 
-- name: Generate a new password for mysql root
-  shell: makepasswd --chars=20
-  register: mysqlrootpassword
-
-- name: Encrypt generated mysql root password
-  shell: mkpasswd --method=SHA-512 {{ mysqlrootpassword.stdout }}
-  register: encrypted_mysqlrootpassword
-
 - name: update mysql root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ encrypted_mysqlrootpassword.stdout }}
+  mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
   with_items:
    - "{{ ansible_hostname }}"
    - 127.0.0.1
@@ -55,7 +47,7 @@
   when: ansible_hostname != 'localhost'
 
 - name: update mysql root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ encrypted_mysqlrootpassword.stdout }}
+  mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
   with_items:
    - 127.0.0.1
    - ::1
@@ -76,31 +68,19 @@
 
 - name: Create the database's
   mysql_db: name={{ item.name }} state=present
-  with_items:
-    - "{{ mysql_db }}"
+  with_items: mysql_db
   when: mysql_db|lower() != 'none'
 
-
-- name: Generate a new password for mysql user
-  shell: makepasswd --chars=20
-  register: mysqluserpassword
-
-- name: Encrypt generated mysql user password
-  shell: mkpasswd --method=SHA-512 {{ mysqluserpassword.stdout }}
-  register: encrypted_mysqluserpassword
-
 - name: Create the database users
-  mysql_user: name={{ item.name }}  password={{ encrypted_mysqluserpassword.stdout|default("foobar") }}
-                priv={{ item.priv|default("*.*:ALL") }} state=present host={{ item.host | default("localhost") }}
-  with_items:
-    - "{{ mysql_users }}"
+  mysql_user: name={{ item.name }}  password={{ item.pass|default("foobar") }}
+                priv={{ item.priv|default("*.*:ALL") }} state=present
+  with_items: mysql_users
   when: mysql_users|lower() != 'none'
 
 - name: Create the replication users
-  mysql_user: name={{ item.name }}  host="%" password={{ encrypted_mysqluserpassword.stdout|default("foobar") }}
+  mysql_user: name={{ item.name }}  host="%" password={{ item.pass|default("foobar") }}
                 priv=*.*:"REPLICATION SLAVE" state=present
-  with_items:
-    - "{{ mysql_repl_user }}"
+  with_items: mysql_repl_user
   when: mysql_repl_role == 'master'
 
 - name: Check if slave is already configured for replication
@@ -110,7 +90,7 @@
   when: mysql_repl_role == 'slave'
 
 - name: Ensure the hostname entry for master is available for the client.
-  lineinfile: dest=/etc/hosts regexp="{{ mysql_repl_master }}" line="{{ hostvars[mysql_repl_master].ansible_default_ipv4.address + "   " + mysql_repl_master }}" state=present
+  host: ip={{ hostvars[mysql_repl_master].ansible_default_ipv4.address }} hostname={{ mysql_repl_master }} state=present
   when: slave|failed and mysql_repl_role == 'slave' and mysql_repl_master is defined
 
 - name: Get the current master servers replication status
@@ -122,5 +102,3 @@
 - name: Change the master in slave to start the replication
   mysql_replication: mode=changemaster master_host={{ mysql_repl_master }} master_log_file={{ repl_stat.File }} master_log_pos={{ repl_stat.Position }} master_user={{ mysql_repl_user[0].name }} master_password={{ mysql_repl_user[0].pass }}
   when: slave|failed and mysql_repl_role == 'slave' and mysql_repl_master is defined
-
-
