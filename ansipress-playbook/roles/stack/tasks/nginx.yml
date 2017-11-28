@@ -1,4 +1,4 @@
----
+a---
 # Setup NGINX Stack
 
 - include: roles/stack/tasks/{{ ansible_distribution | lower }}/nginx_repo.yml
