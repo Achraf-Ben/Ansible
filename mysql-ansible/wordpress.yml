@@ -8,10 +8,7 @@
     setup:
 
   vars:
-    username: ansible
-    hostname: anothergeek.nl
     website_name: anothergeek
-    public_key: roles/security/files/ansible.pub
     rootpass: "{{ lookup('password', 'credentials/' + '/rootpass length=25')}}"
     userpass: "{{ lookup('password', 'credentials/' + '/userpass length=25')}}"
     mysqlrootpassword: "{{ lookup('password', 'credentials/' + '/mysqlrootpassword length=25')}}"
@@ -19,10 +16,4 @@
 
 
   roles:
-    - bootstrap
-    - security
-    - appserver
     - mysql
-    - wordpress
-    - reboot
-    - print
