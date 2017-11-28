@@ -30,6 +30,8 @@ ansible-playbook -K basic.yml
 # Run a playbook with sudo password(-K) and ssh password (--ask-pass --ssh-extra-args='-o "PubkeyAuthentication=no"')
 ansible-playbook -i hosts playbook.yml -K --ask-pass --ssh-extra-args='-o "PubkeyAuthentication=no"' --ssh-extra-args='-o "StrictHostKeyChecking=no"'
 
+--extra-vars "ansible_python_interpreter=/usr/local/bin/python"
+
 # Run apt-get install nginx against a local server
 ansible -i ./hosts local --connection=local -b --become-user=root \
     -m shell -a 'apt-get install nginx'
