@@ -37,7 +37,7 @@
 
 - name: Changing owenership of /var/www/wordpress to www-data
   become: yes
-  file: path=/var/www/wordpress/
+  file: path=/var/www/wordpress/ state=directory
   owner: www-data
   group: www-data
   recurse: yes

@@ -25,7 +25,7 @@ ansible -m shell -a 'getent passwd | grep ansible' all
 ansible -b -K -m user -a 'name=newuser state=absent' all
 
 # Play the basic role with a playbook
-ansible-playbook -K basic.yml
+ansible-playbook -K wordpress.yml --extra-vars "ansible_python_interpreter=/usr/local/bin/python"
 
 # Run a playbook with sudo password(-K) and ssh password (--ask-pass --ssh-extra-args='-o "PubkeyAuthentication=no"')
 ansible-playbook -i hosts playbook.yml -K --ask-pass --ssh-extra-args='-o "PubkeyAuthentication=no"' --ssh-extra-args='-o "StrictHostKeyChecking=no"'
