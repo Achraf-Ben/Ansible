@@ -8,10 +8,10 @@
 
 - name: Install Nginx
   apt: pkg=nginx state=installed update_cache=true
-    when: ppastable|success
-    register: nginxinstalled
-    notify:
-      - Start Nginx
+  when: ppastable|success
+  register: nginxinstalled
+  notify:
+    - Start Nginx
 
 - name: Add Nginx Repository
   apt_repository:
