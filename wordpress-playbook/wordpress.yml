@@ -11,7 +11,7 @@
     hostname: anothergeek.nl
     website_name: anothergeek     # Lower case and no special characters (also used as database name)
     public_key: roles/security/files/ansible.pub
-
+    docroot: /var/www/{{ website_name }}/public
     rootpass: "{{ lookup('password', 'credentials/' + '/rootpass length=25')}}"
     username: ansible
     userpass: "{{ lookup('password', 'credentials/' + '/userpass length=25')}}"
