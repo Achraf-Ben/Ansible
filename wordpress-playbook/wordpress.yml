@@ -27,7 +27,7 @@
     #- wordpress
     - reboot
 
-- hosts: uppstream
+- hosts: upstream
   become: yes
   become_method: sudo
   gather_facts: no
