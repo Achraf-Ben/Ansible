@@ -1,0 +1,15 @@
+nginx_basic_auth:
+  - { user: 'admin', password: 'admin' }
+
+nginx_sites:
+  default:
+    domains: ['anothergeek.nl', 'www.anothergeek.nl']
+    default_server: True
+    upstreams:
+      - name: 'Webserver'
+        servers: ['192.168.221.140:3000', '192.168.221.141:3001']
+  blog:
+    domains: ['admin.anothergeek.nl']
+    serve_assets:
+      enabled: False
+    basic_auth: True

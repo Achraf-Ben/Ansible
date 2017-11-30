@@ -22,6 +22,7 @@
   roles:
     - bootstrap
     - security
-    - mysql
-    - wordpress
+    - nginx-lb
+    #- mysql
+    #- wordpress
     - reboot
