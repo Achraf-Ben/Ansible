@@ -6,13 +6,29 @@
     state: 'present'
   when: nginx_basic_auth
 
-- name: Install nginx
-  apt:
-    name: 'nginx'
-    state: 'present'
-  when: nginx_install_service
+- name: Install Nginx
+  apt: pkg=nginx state=installed update_cache=true
+    when: ppastable|success
+    register: nginxinstalled
+    notify:
+      - Start Nginx
+
+- name: Add Nginx Repository
+  apt_repository:
+    repo: ppa:nginx/stable
+    state: present
+  register: ppastable
+
+- name: Create Web Root
+  when: nginxinstalled|success
+  file:
+    dest: '{{ docroot }}'
+    mode: 775
+    state: directory
+    owner: www-data
+    group: www-data
   notify:
-    - Test nginx and restart
+    - Reload Nginx
 
 - name: Create default nginx directories
   file:
