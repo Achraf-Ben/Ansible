@@ -1,12 +1,16 @@
 ---
 
 - name: Install role dependencies
+  become: yes
+  become_method: sudo
   apt:
     name: 'python-passlib'
     state: 'present'
   when: nginx_basic_auth
 
 - name: Install Nginx
+  become: yes
+  become_method: sudo
   apt: pkg=nginx state=installed update_cache=true
   when: ppastable|success
   register: nginxinstalled
@@ -14,12 +18,16 @@
     - Start Nginx
 
 - name: Add Nginx Repository
+  become: yes
+  become_method: sudo
   apt_repository:
     repo: ppa:nginx/stable
     state: present
   register: ppastable
 
 - name: Create Web Root
+  become: yes
+  become_method: sudo
   when: nginxinstalled|success
   file:
     dest: '{{ docroot }}'
