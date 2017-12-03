@@ -1,5 +1,5 @@
 ---
-- hosts: 137
+- hosts: wordpress
   become: yes
   become_method: sudo
   gather_facts: no
