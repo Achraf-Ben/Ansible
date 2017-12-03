@@ -71,9 +71,9 @@
 
 - name: Create the database users
   mysql_user:
-    name: "{{ website_name }}"
+    name: root
     priv: '*.*:ALL'
-    password: "{{ mysqldbpassword }}"
+    password: "{{ mysqlrootpassword }}"
     host: localhost
     login_host: localhost
     login_user: "{{ website_name }}"
