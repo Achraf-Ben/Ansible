@@ -28,7 +28,7 @@
   apt: name=ntp state=present
   notify: service ntp restart
 
-- name: Instaling apache2, php, libapache2-mod-php and php-mcrypt
+- name: Instaling ufw, apache2, php, libapache2-mod-php and php-mcrypt
   apt: name={{ item }} state=present
   become: yes
   become_method: sudo
@@ -37,6 +37,7 @@
     - php
     - libapache2-mod-php
     - php-mcrypt
+    - ufw
 
 - name: Installing python, python-pip and python-dev
   apt: name={{ item }} state=present
