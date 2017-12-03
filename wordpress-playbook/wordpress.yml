@@ -16,13 +16,13 @@
     username: ansible
     userpass: "{{ lookup('password', 'credentials/' + '/userpass length=25')}}"
 
-    mysqlrootpassword: "{{ lookup('password', 'credentials/' + '/mysqlrootpassword length=25')}}"
-    mysqldbpassword: "{{ lookup('password', 'credentials/' + '/mysqldbpassword length=25')}}"
+    mysqlrootpassword: "{{ lookup('password', 'credentials/' + '/mysqlrootpassword length=25 chars=ascii_letters')}}"
+    mysqldbpassword: "{{ lookup('password', 'credentials/' + '/mysqldbpassword length=25 chars=ascii_letters')}}"
 
   roles:
     - bootstrap
     - security
-    - nginx-lb
+    #- nginx-lb
     - mysql
     - wordpress
     - reboot
