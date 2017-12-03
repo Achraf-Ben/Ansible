@@ -1,5 +1,5 @@
 ---
-- hosts: webserver
+- hosts: wordpress
   become: yes
   become_method: sudo
   gather_facts: no
@@ -9,7 +9,7 @@
 
   vars:
     hostname: anothergeek.nl
-    website_name: anothergeek     # Lower case and no special characters (also used as database name)
+    website_name: anothergeek
     public_key: roles/security/files/ansible.pub
     docroot: /var/www/{{ website_name }}/public
     rootpass: "{{ lookup('password', 'credentials/' + '/rootpass length=25')}}"
@@ -23,34 +23,6 @@
     - bootstrap
     - security
     - nginx-lb
-    #- mysql
-    #- wordpress
-    - reboot
-
-- hosts: upstream
-  become: yes
-  become_method: sudo
-  gather_facts: no
-  pre_tasks:
-  - name: Gathering Facts
-    setup:
-
-  vars:
-    hostname: anothergeek.nl
-    website_name: anothergeek     # Lower case and no special characters (also used as database name)
-    public_key: roles/security/files/ansible.pub
-
-    rootpass: "{{ lookup('password', 'credentials/' + '/rootpass length=25')}}"
-    username: ansible
-    userpass: "{{ lookup('password', 'credentials/' + '/userpass length=25')}}"
-
-    mysqlrootpassword: "{{ lookup('password', 'credentials/' + '/mysqlrootpassword length=25')}}"
-    mysqldbpassword: "{{ lookup('password', 'credentials/' + '/mysqldbpassword length=25')}}"
-
-  roles:
-    - bootstrap
-    - security
-    - nginx-lb
-    #- mysql
-    #- wordpress
+    - mysql
+    - wordpress
     - reboot

@@ -1,7 +1,6 @@
 # Example shows using the local machine still
 # Remove 'connection' and set hosts to 'remote' for a remote connection
 - hosts: remote
-  connection: local
   become: yes
   become_user: root
   tasks:
@@ -17,8 +16,4 @@
    - name: Start Nginx
      service:
        name: nginx
-<<<<<<< HEAD
        state: started
-=======
-       state: started
->>>>>>> 8596dd3dfc26e5c943c016dff81bc90f7ac92ffd

@@ -1,9 +1,8 @@
 - hosts: remote
-  connection: local
   become: yes
   become_user: root
   vars:
-   - docroot: /var/www/justanothergeek.nl/public
+   - docroot: /var/www/anothergeek.nl/public
   tasks:
    - name: Add Nginx Repository
      apt_repository:
