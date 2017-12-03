@@ -3,9 +3,7 @@
 mysql_pkgs:
   - mysql-common
   - mysql-server
-
   - python-mysqldb
-  - libmysqlclient-dev
 
 mysql_service: mysql
 mysql_conf_dir: "/etc/mysql/"
