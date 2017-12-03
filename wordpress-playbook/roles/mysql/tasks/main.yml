@@ -75,11 +75,7 @@
     state: present
 
 - name: Create the database users
-  mysql_user:
-    name: "{{ website_name }}"
-    password: "{{ mysqldbpassword }}"
-    state: present
-    priv: '"{{ website_name }}".*:ALL'
+  mysql_user: user={{ website_name }} password={{ mysqldbpassword }} state=present priv='{{ website_name }}.*:ALL/*.*:SUPER,RELOAD,SHOW DATABASES'
 
 - name: Tunning MySQL Variables, Hold on...
   lineinfile:
