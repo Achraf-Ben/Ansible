@@ -72,7 +72,6 @@
 - name: Create the database's
   mysql_db:
     name: "{{ website_name }}"
-    host: localhost
     state: present
 
 - name: Create the database users
