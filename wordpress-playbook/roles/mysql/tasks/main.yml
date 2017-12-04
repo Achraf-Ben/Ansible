@@ -32,7 +32,7 @@
   service: name={{ mysql_service }} state=started enabled=yes
 
 - name: update mysql root password for all root accounts
-  sudo: yes
+  become: yes
   mysql_user:
     name: root
     host: "{{ item }}"
