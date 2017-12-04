@@ -17,6 +17,8 @@
 
 # Initializing System Boot Process
 - name: Initializing System Boot Process, Hold on...
+  become: yes
+  method: sudo
   local_action: wait_for host={{ ansible_host }}
                 state=started
                 timeout=200
