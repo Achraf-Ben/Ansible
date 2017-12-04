@@ -17,10 +17,6 @@
   environment: "{{ env }}"
   when: ansible_os_family == 'Debian'
 
-- name: Copy the my.cnf file
-  template: src=my.cnf.{{ ansible_os_family }}.j2 dest={{ mysql_conf_dir }}/my.cnf
-  notify:
-   - restart mysql
 
 - name: Create the directory /etc/mysql/conf.d
   file: path=/etc/mysql/conf.d state=directory
@@ -36,21 +32,36 @@
   service: name={{ mysql_service }} state=started enabled=yes
 
 - name: update mysql root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
+  sudo: yes
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "{{ mysqlrootpassword }}"
+    login_user: root
+    login_password: "{{ mysqlrootpassword }}"
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
   with_items:
-   - "{{ ansible_hostname }}"
-   - 127.0.0.1
-   - ::1
-   - localhost
-  when: ansible_hostname != 'localhost'
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
 
-- name: update mysql root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
-  with_items:
-   - 127.0.0.1
-   - ::1
-   - localhost
-  when: ansible_hostname == 'localhost'
+- name: Create the database user
+  mysql_user:
+    name: {{ website_name }}
+    priv: '*.*:ALL'
+    password: "{{ mysqldbpassword }}"
+    host: localhost
+    login_host: localhost
+    login_user: root
+    login_password: "{{ mysqlrootpassword }}"
+    append_privs: yes
+
+- name: Copy the my.cnf file
+  template: src=my.cnf.{{ ansible_os_family }}.j2 dest={{ mysql_conf_dir }}/my.cnf
+  notify:
+   - restart mysql
 
 - name: copy .my.cnf file with root password credentials
   template: src=.my.cnf.j2 dest=~/.my.cnf mode=0600
@@ -63,17 +74,6 @@
 
 - name: remove the test database
   mysql_db: name=test state=absent
-
-- name: Create the database users
-  mysql_user:
-    name: root
-    priv: '*.*:ALL'
-    password: "{{ mysqlrootpassword }}"
-    host: localhost
-    login_host: localhost
-    login_user: "{{ website_name }}"
-    login_password: "{{ mysqldbpassword }}"
-    append_privs: yes
 
 - name: Create the database's
   mysql_db:
