@@ -49,7 +49,7 @@
 
 - name: Create the database user
   mysql_user:
-    name: {{ website_name }}
+    name: "{{ website_name }}"
     priv: '*.*:ALL'
     password: "{{ mysqldbpassword }}"
     host: localhost
